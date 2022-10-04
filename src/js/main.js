@@ -107,17 +107,18 @@ window.addEventListener('DOMContentLoaded', () => {
 	// Modal
 
 	const modal = document.querySelector('.modal');
-	const modalClose = modal.querySelector('[data-close]');
 	const triggerButtons = document.querySelectorAll('[data-modal]');
 	//const modalTimerID = setTimeout(openModal, 20000);
 
 	function closeModal() {
-		modal.classList.toggle('hide');
+		modal.classList.add('hide');
+		modal.classList.remove('show');
 		document.body.style.overflow = '';
 	}
 
 	function openModal() {
-		modal.classList.toggle('hide');
+		modal.classList.add('show');
+		modal.classList.remove('hide');
 		document.body.style.overflow = 'hidden';
 		//clearInterval(modalTimerID);
 	}
@@ -143,12 +144,8 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 	
-	modalClose.addEventListener('click', (e) => {
-		closeModal();
-	});
-
-	modal.addEventListener('click', (e) => {
-		if(e.target.classList.contains('modal')) {
+	modal.addEventListener('click', (e) => {	
+		if(e.target.classList.contains('modal') || e.target.hasAttribute('data-close')) {
 			closeModal();
 		}
 	});
@@ -240,24 +237,27 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	const forms = document.querySelectorAll('form');
 
+	const messages = {
+		loading: 'img/svg/spinner.svg',
+		success: 'Спасибо! Мы с вами скоро свяжемся',
+		failure: 'Упс... Что-то пошло не так...',
+	};
+
 	forms.forEach(form => {
 		sendData(form);
 	});
-	
-	const messages = {
-		loading: 'Загрузка',
-		success: 'Спасибо! Мы с вам скоро свяжемся',
-		failure: 'Что-то пошло не так',
-	};
 
 	function sendData(form) {
 		form.addEventListener('submit', (e) => {
 			e.preventDefault();
 
-			const messageField = document.createElement('div');
-			messageField.classList.add('status');
-			messageField.textContent = messages.loading;
-			form.append(messageField);
+			const messageField = document.createElement('img');
+			messageField.src = messages.loading;
+			messageField.style.cssText = `
+				display: block;
+				margin: 0 auto;
+			`;
+			form.insertAdjacentElement('afterend' ,messageField);
 
 			const request = new XMLHttpRequest();
 			request.open('POST', 'server.php');
@@ -269,12 +269,35 @@ window.addEventListener('DOMContentLoaded', () => {
 			request.addEventListener('load', () => {
 				if (request.status === 200) {
 					console.log(request.response);
-					messageField.textContent = messages.success;
+					messageField.remove();
+					createMessage(messages.success);
 					form.reset();
 				} else {
-					messageField.textContent = messages.failure;
+					messageField.remove();
+					createMessage(messages.failure);
 				}
 			});
 		});
+	}
+
+	function createMessage(message) {
+		const modalContent = document.querySelector('.modal__content');
+		const newModalContent = document.createElement('div');
+
+		openModal();
+		modalContent.classList.add('hide');
+		
+		newModalContent.classList.add('modal__content');
+		newModalContent.innerHTML = `
+			<div data-close class="modal__close">&times;</div>
+			<div class="modal__title">${message}</div>
+		`;
+		document.querySelector('.modal__dialog').append(newModalContent);
+
+		setTimeout(() => {
+			closeModal();
+			newModalContent.remove();
+			modalContent.classList.remove('hide');
+		}, 4000);
 	}
 });
