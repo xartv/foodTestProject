@@ -109,7 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	const modal = document.querySelector('.modal');
 	const modalClose = modal.querySelector('[data-close]');
 	const triggerButtons = document.querySelectorAll('[data-modal]');
-	const modalTimerID = setTimeout(openModal, 20000);
+	//const modalTimerID = setTimeout(openModal, 20000);
 
 	function closeModal() {
 		modal.classList.toggle('hide');
@@ -119,7 +119,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	function openModal() {
 		modal.classList.toggle('hide');
 		document.body.style.overflow = 'hidden';
-		clearInterval(modalTimerID);
+		//clearInterval(modalTimerID);
 	}
 
 	function showModalByScroll() {
@@ -144,22 +144,16 @@ window.addEventListener('DOMContentLoaded', () => {
 	});
 	
 	modalClose.addEventListener('click', (e) => {
-		e.preventDefault();
-
 		closeModal();
 	});
 
 	modal.addEventListener('click', (e) => {
-		e.preventDefault();
-
 		if(e.target.classList.contains('modal')) {
 			closeModal();
 		}
 	});
 
 	document.addEventListener('keyup', (e) => {
-		e.preventDefault();
-
 		if(!modal.classList.contains('hide') && e.code === 'Escape') {
 			closeModal();
 		}
@@ -242,4 +236,45 @@ window.addEventListener('DOMContentLoaded', () => {
 		"menu__item",
 	).render();
 
+	// Sending forms to server
+
+	const forms = document.querySelectorAll('form');
+
+	forms.forEach(form => {
+		sendData(form);
+	});
+	
+	const messages = {
+		loading: 'Загрузка',
+		success: 'Спасибо! Мы с вам скоро свяжемся',
+		failure: 'Что-то пошло не так',
+	};
+
+	function sendData(form) {
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			const messageField = document.createElement('div');
+			messageField.classList.add('status');
+			messageField.textContent = messages.loading;
+			form.append(messageField);
+
+			const request = new XMLHttpRequest();
+			request.open('POST', 'server.php');
+			
+			const formData = new FormData(form);
+			
+			request.send(formData);
+
+			request.addEventListener('load', () => {
+				if (request.status === 200) {
+					console.log(request.response);
+					messageField.textContent = messages.success;
+					form.reset();
+				} else {
+					messageField.textContent = messages.failure;
+				}
+			});
+		});
+	}
 });

@@ -193,8 +193,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const modal = document.querySelector('.modal');
   const modalClose = modal.querySelector('[data-close]');
-  const triggerButtons = document.querySelectorAll('[data-modal]');
-  const modalTimerID = setTimeout(openModal, 20000);
+  const triggerButtons = document.querySelectorAll('[data-modal]'); //const modalTimerID = setTimeout(openModal, 20000);
 
   function closeModal() {
     modal.classList.toggle('hide');
@@ -203,8 +202,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function openModal() {
     modal.classList.toggle('hide');
-    document.body.style.overflow = 'hidden';
-    clearInterval(modalTimerID);
+    document.body.style.overflow = 'hidden'; //clearInterval(modalTimerID);
   }
 
   function showModalByScroll() {
@@ -223,19 +221,14 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
   modalClose.addEventListener('click', e => {
-    e.preventDefault();
     closeModal();
   });
   modal.addEventListener('click', e => {
-    e.preventDefault();
-
     if (e.target.classList.contains('modal')) {
       closeModal();
     }
   });
   document.addEventListener('keyup', e => {
-    e.preventDefault();
-
     if (!modal.classList.contains('hide') && e.code === 'Escape') {
       closeModal();
     }
@@ -286,7 +279,40 @@ window.addEventListener('DOMContentLoaded', () => {
 
   new MenuItem('img/tabs/vegy.jpg', "vegy", 'Меню "Фитнес"', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 5, '.menu__field .container').render();
   new MenuItem("img/tabs/elite.jpg", "elite", 'Меню “Премиум”', 'В меню “Премиум” мы используем <br> не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - <br> ресторанное меню без похода в ресторан!  ', 10, '.menu__field .container', "menu__item").render();
-  new MenuItem("img/tabs/post.jpg", "post", 'Меню "Постное"', 'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.', 8, '.menu__field .container', "menu__item").render();
+  new MenuItem("img/tabs/post.jpg", "post", 'Меню "Постное"', 'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.', 8, '.menu__field .container', "menu__item").render(); // Sending forms to server
+
+  const forms = document.querySelectorAll('form');
+  forms.forEach(form => {
+    sendData(form);
+  });
+  const messages = {
+    loading: 'Загрузка',
+    success: 'Спасибо! Мы с вам скоро свяжемся',
+    failure: 'Что-то пошло не так'
+  };
+
+  function sendData(form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const messageField = document.createElement('div');
+      messageField.classList.add('status');
+      messageField.textContent = messages.loading;
+      form.append(messageField);
+      const request = new XMLHttpRequest();
+      request.open('POST', 'server.php');
+      const formData = new FormData(form);
+      request.send(formData);
+      request.addEventListener('load', () => {
+        if (request.status === 200) {
+          console.log(request.response);
+          messageField.textContent = messages.success;
+          form.reset();
+        } else {
+          messageField.textContent = messages.failure;
+        }
+      });
+    });
+  }
 });
 
 /***/ })
