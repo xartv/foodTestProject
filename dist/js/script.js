@@ -114,7 +114,8 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function showTabContent(i = 0) {
+  function showTabContent() {
+    let i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
     tabsContent[i].classList.add('show', 'fade');
     tabsContent[i].classList.remove('hide');
     tabs[i].classList.add('tabheader__item_active');
@@ -234,12 +235,17 @@ window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', showModalByScroll); // Classes
 
   class MenuItem {
-    constructor(img, alt, subtitle, descr, price, parentSelector, ...classes) {
+    constructor(img, alt, subtitle, descr, price, parentSelector) {
       this.img = img;
       this.alt = alt;
       this.subtitle = subtitle;
       this.descr = descr;
       this.price = price;
+
+      for (var _len = arguments.length, classes = new Array(_len > 6 ? _len - 6 : 0), _key = 6; _key < _len; _key++) {
+        classes[_key - 6] = arguments[_key];
+      }
+
       this.classes = classes;
       this.parentSelector = parentSelector;
       this.transfer = 60;
@@ -299,20 +305,25 @@ window.addEventListener('DOMContentLoaded', () => {
 				margin: 0 auto;
 			`;
       form.insertAdjacentElement('afterend', messageField);
-      const request = new XMLHttpRequest();
-      request.open('POST', 'server.php');
       const formData = new FormData(form);
-      request.send(formData);
-      request.addEventListener('load', () => {
-        if (request.status === 200) {
-          console.log(request.response);
-          messageField.remove();
-          createMessage(messages.success);
-          form.reset();
-        } else {
-          messageField.remove();
-          createMessage(messages.failure);
-        }
+      const obj = {};
+      formData.forEach((value, key) => {
+        obj[key] = value;
+      });
+      fetch('server.php', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+      }).then(data => data.text()).then(data => {
+        console.log(data);
+        messageField.remove();
+        createMessage(messages.success);
+      }).catch(() => {
+        createMessage(messages.failure);
+      }).finally(() => {
+        form.reset();
       });
     });
   }

@@ -5,6 +5,7 @@ const autoprefixer = require("autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const postcss = require("gulp-postcss");
 const browsersync = require("browser-sync");
+const jsonServer = require("json-server");
 
 const dist = "./dist";
 
@@ -76,7 +77,19 @@ gulp.task("watch", () => {
     gulp.watch("./src/js/**/*.js", gulp.parallel("build-js"));
 });
 
-gulp.task("build", gulp.parallel("copy-html", "copy-assets", "build-sass", "build-js"));
+gulp.task("json-server", () => {
+	const server = jsonServer.create();
+	const router = jsonServer.router('db.json');
+	const middlewares = jsonServer.defaults();
+
+	server.use(middlewares);
+	server.use(router);
+	server.listen(3000, () => {
+  console.log('JSON Server is running');
+});
+});
+
+gulp.task("build", gulp.parallel("copy-html", "copy-assets", "build-sass", "build-js", "json-server"));
 
 gulp.task("prod", () => {
     gulp.src("./src/index.html")

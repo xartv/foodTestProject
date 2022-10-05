@@ -259,23 +259,32 @@ window.addEventListener('DOMContentLoaded', () => {
 			`;
 			form.insertAdjacentElement('afterend' ,messageField);
 
-			const request = new XMLHttpRequest();
-			request.open('POST', 'server.php');
-			
 			const formData = new FormData(form);
-			
-			request.send(formData);
+			const obj = {};
 
-			request.addEventListener('load', () => {
-				if (request.status === 200) {
-					console.log(request.response);
-					messageField.remove();
-					createMessage(messages.success);
-					form.reset();
-				} else {
-					messageField.remove();
-					createMessage(messages.failure);
-				}
+			formData.forEach((value, key) => {
+				obj[key] = value;
+			});
+			
+			fetch('server.php', {
+				method: 'POST',
+				headers: {
+					'Content-type': 'application/json',
+				},
+				body: JSON.stringify(obj),
+			})
+			.then(data => data.text())
+			.then(data => {
+				console.log(data);
+				messageField.remove();
+				createMessage(messages.success);
+				
+			})
+			.catch(() => {
+				createMessage(messages.failure);
+			})
+			.finally(() => {
+				form.reset();
 			});
 		});
 	}
