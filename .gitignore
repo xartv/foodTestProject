@@ -6,6 +6,7 @@
 .pnp.js
 /src/scss
 /dist
+gulpfile.js
 
 # testing
 /coverage
