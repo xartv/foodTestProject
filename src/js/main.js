@@ -204,34 +204,27 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	new MenuItem(
-		'img/tabs/vegy.jpg', 
-		"vegy", 
-		'Меню "Фитнес"', 
-		'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 
-		5, 
-		'.menu__field .container',
-	).render();
+	const getData = async (url) => {
+		const res = await fetch(url);
+		
+		return await res.json();
+	};
 
-	new MenuItem(
-		"img/tabs/elite.jpg", 
-		"elite", 
-		'Меню “Премиум”', 
-		'В меню “Премиум” мы используем <br> не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - <br> ресторанное меню без похода в ресторан!  ', 
-		10, 
-		'.menu__field .container',
-		"menu__item",
-	).render();
+	// запрос через fetch
+	//getData('http://localhost:3000/menu')
+	//.then((data) => {
+	//	data.forEach(({img, altimg, title, descr, price}) => {
+	//		new MenuItem(img, altimg, title, descr, price, '.menu__field .container').render();
+	//	});
+	//});
 
-	new MenuItem(
-		"img/tabs/post.jpg", 
-		"post", 
-		'Меню "Постное"', 
-		'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.', 
-		8, 
-		'.menu__field .container',
-		"menu__item",
-	).render();
+	// запрос через axios
+	axios.get('http://localhost:3000/menu')
+	.then(data => {
+		data.data.forEach(({img, altimg, title, descr, price}) => {
+			new MenuItem(img, altimg, title, descr, price, '.menu__field .container').render();
+		});
+	});
 
 	// Sending forms to server
 
@@ -309,4 +302,170 @@ window.addEventListener('DOMContentLoaded', () => {
 			modalContent.classList.remove('hide');
 		}, 4000);
 	}
+
+	// creating sliders v1
+ 
+	//const slides = document.querySelectorAll('.offer__slide');
+	//const currentIndex = document.querySelector('#current');
+	//const totalIndex = document.querySelector('#total');
+	//const prevArrow = document.querySelector('.offer__slider-prev');
+	//const nextArrow = document.querySelector('.offer__slider-next');
+	//let currentSlideIndex;
+	
+	//showSlide();
+
+	//function showSlide() { 
+	//	totalIndex.innerHTML = slides.length < 10 ? `0${slides.length}` : slides.length;
+
+	//	slides.forEach((item, index) => {
+	//		if (!item.classList.contains('hide')) {
+	//			currentSlideIndex = index;
+	//			currentIndex.innerHTML = slides.length < 10 ? `0${index + 1}` : index;
+	//		}
+	//	});
+	//}
+	
+	//function changeSlide(prevSlide, nextSlide) {
+	//	if (prevSlide) {
+	//		slides.forEach((item, index) => {
+	//			if(item.previousElementSibling && index == currentSlideIndex) {
+	//				item.previousElementSibling.classList.add('show');
+	//				item.previousElementSibling.classList.remove('hide');
+
+	//				item.classList.remove('show');
+	//				item.classList.add('hide');
+	//			}
+	//		});
+	//	}
+
+	//	if (nextSlide) {
+	//		slides.forEach((item, index) => {
+	//			if(item.nextElementSibling && index == currentSlideIndex) {
+	//				item.nextElementSibling.classList.add('show');
+	//				item.nextElementSibling.classList.remove('hide');
+
+	//				item.classList.remove('show');
+	//				item.classList.add('hide');
+	//			}
+	//		});
+	//	}
+
+	//	showSlide();
+	//}	
+
+	//prevArrow.addEventListener('click', (e) => {
+	//	changeSlide(true, false);
+	//});
+
+	//nextArrow.addEventListener('click', (e) => {
+	//	changeSlide(false, true);
+	//});
+
+	
+	// creating slider v2
+
+	//const slides = document.querySelectorAll('.offer__slide');
+	//const current = document.querySelector('#current');
+	//const total = document.querySelector('#total');
+	//const prevArrow = document.querySelector('.offer__slider-prev');
+	//const nextArrow = document.querySelector('.offer__slider-next');
+	//let currentSlideIndex = 1;
+
+	//showSlides(currentSlideIndex);
+
+	//total.innerHTML = slides.length < 10 ? `0${slides.length}` : slides.length;
+
+	//function showSlides(n) {
+	//	if (n < 1) {
+	//		currentSlideIndex = slides.length;
+	//	}  
+
+	//	if (n > slides.length) {
+	//		currentSlideIndex = 1;
+	//	}
+		
+	//	slides.forEach(item => {
+	//		item.classList.remove('show');
+	//		item.classList.add('hide');
+	//	});
+
+	//	slides[currentSlideIndex - 1].classList.remove('hide');
+	//	slides[currentSlideIndex - 1].classList.add('show');
+
+	//	current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;
+	//}
+
+	//function changeSlide(n) {
+	//	showSlides(currentSlideIndex += n);
+	//}
+
+	//prevArrow.addEventListener('click', () => {
+	//	changeSlide(-1);
+	//});
+
+	//nextArrow.addEventListener('click', () => {
+	//	changeSlide(1);
+	//});
+
+
+	// creat slider
+
+	const slides = document.querySelectorAll('.offer__slide');
+	const current = document.querySelector('#current');
+	const total = document.querySelector('#total');
+	const prevArrow = document.querySelector('.offer__slider-prev');
+	const nextArrow = document.querySelector('.offer__slider-next');
+	const outer = document.querySelector('.offer__slider-wrapper');
+	const inner = document.querySelector('.offer__slider-inner');
+	const width = window.getComputedStyle(outer).width;
+	let offset = 0;
+	let currentSlideIndex = 1;
+
+	total.innerHTML = slides.length < 10 ? `0${slides.length}` : slides.length;
+	current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;
+
+	inner.style.display = 'flex';
+	inner.style.transition = '0.5s All';
+	outer.style.overflow = 'hidden';
+	inner.style.width = 100 * slides.length + '%';
+
+	slides.forEach(slide => {
+		slide.style.width = width;
+	});
+
+	nextArrow.addEventListener('click', () => {
+		if (offset == parseInt(width) * (slides.length - 1)) {
+			offset = 0;
+		} else {
+			offset += parseInt(width); 
+		}
+
+		inner.style.transform = `translateX(-${offset}px)`;
+
+		if (currentSlideIndex == slides.length) {
+			currentSlideIndex = 1;
+		} else {
+			currentSlideIndex++;
+		}
+	
+		current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;
+	});
+
+	prevArrow.addEventListener('click', () => {
+		if (offset == 0) {
+			offset = parseInt(width) * (slides.length - 1);
+		} else {
+			offset -= parseInt(width); 
+		}
+
+		inner.style.transform = `translateX(-${offset}px)`;
+
+		if (currentSlideIndex == 1) {
+			currentSlideIndex = slides.length;
+		} else {
+			currentSlideIndex--;
+		}
+
+		current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;
+	});
 });
