@@ -24,8 +24,6 @@
   ],
   "requests": [
     {
-      "name": "Artem",
-      "test": "Test",
       "id": 1
     }
   ]
