@@ -410,6 +410,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	// creat slider
 
+	const slider = document.querySelector('.offer__slider');
 	const slides = document.querySelectorAll('.offer__slide');
 	const current = document.querySelector('#current');
 	const total = document.querySelector('#total');
@@ -422,7 +423,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	let currentSlideIndex = 1;
 
 	total.innerHTML = slides.length < 10 ? `0${slides.length}` : slides.length;
-	current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;
+	setCurrentSlideValue();
 
 	inner.style.display = 'flex';
 	inner.style.transition = '0.5s All';
@@ -448,7 +449,12 @@ window.addEventListener('DOMContentLoaded', () => {
 			currentSlideIndex++;
 		}
 	
-		current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;
+		setCurrentSlideValue();
+
+		removeClassFromElementOfCollection(dots, 'active-dot');
+
+		dots[currentSlideIndex - 1].classList.add('active-dot');
+		
 	});
 
 	prevArrow.addEventListener('click', () => {
@@ -466,6 +472,54 @@ window.addEventListener('DOMContentLoaded', () => {
 			currentSlideIndex--;
 		}
 
-		current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;
+		setCurrentSlideValue();
+
+		removeClassFromElementOfCollection(dots, 'active-dot');
+
+		dots[currentSlideIndex - 1].classList.add('active-dot');
 	});
+
+	// create dots
+
+	const dotsWrapper = document.createElement('ol');
+	dotsWrapper.classList.add('carousel-indicators');
+
+	slider.style.position = 'relative';
+	slider.append(dotsWrapper);
+
+	for (let i = 0; i < slides.length; i++) {
+		dotsWrapper.innerHTML += `<li class="dot" data-slider="${i + 1}"></li>`;
+	}
+
+	const dots = document.querySelectorAll('.dot');
+
+	dots[currentSlideIndex - 1].classList.add('active-dot');
+
+	dots.forEach(dot => {
+		dot.addEventListener('click', (e) => {
+			const target = e.target;
+
+			removeClassFromElementOfCollection(dots, 'active-dot');
+			
+			e.target.classList.add('active-dot');
+
+			offset = (target.dataset.slider - 1) * parseInt(width);
+
+			inner.style.transform = `translateX(-${offset}px)`;
+
+			currentSlideIndex = +target.dataset.slider;
+			
+			setCurrentSlideValue();
+		});
+	});
+
+	function setCurrentSlideValue() {
+		current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;	
+	} 
+
+	function removeClassFromElementOfCollection(collection, className) {
+		collection.forEach(item => {
+			item.classList.remove(className);
+		});
+	}
 });
