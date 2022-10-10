@@ -1,7 +1,5 @@
-function timer() {
+function timer(timerClass, deadline) {
 	// Timer
-
-	let deadline = '2022-10-10';
 
 	function calculateDifferenceOfDate(endtime) {
 		let days, hours, minutes, seconds;
@@ -57,7 +55,7 @@ function timer() {
 		}
 	}
 
-	setTimer('.timer', deadline);
+	setTimer(timerClass, deadline);
 }
 
-module.exports = timer;
+export {timer};

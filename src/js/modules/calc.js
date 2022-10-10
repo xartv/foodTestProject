@@ -1,20 +1,30 @@
 function calc() {
 	// create calc
 	const resultField = document.querySelector('.calculating__result span');
-	let sex = 'female';
-	let activity = 1.375;
-	let height, weight, age;
+	let sex, activity, height, weight, age;
 
-	
+	if (localStorage.getItem('sex')) {
+		sex = localStorage.getItem('sex');
+	} else {
+		sex = 'female';
+		localStorage.setItem('sex', 'female');
+	}
+
+	if (localStorage.getItem('activity')) {
+		activity = localStorage.getItem('activity');
+	} else {
+		activity = 1.375;
+		localStorage.setItem('activity', 1.375);
+	}
+
 	getStaticInformation('.calculating__choose', 'calculating__choose-item_active');
 	getStaticInformation('.calculating__choose_big', 'calculating__choose-item_active');
 	getVariableInformation('#height');
 	getVariableInformation('#weight');
 	getVariableInformation('#age');
+	initActivityClass('.calculating__choose', 'calculating__choose-item_active');
+	initActivityClass('.calculating__choose_big', 'calculating__choose-item_active');
 	calcCalories();
-
-	
-
 
 	function calcCalories() {
 		if(!sex || !height || !weight || !age || !activity) {
@@ -43,9 +53,11 @@ function calc() {
 
 			if (target.dataset.ratio) {
 				activity = target.dataset.ratio;
+				localStorage.setItem('activity', target.dataset.ratio);
 			}
 			if (target.id == 'male' || target.id == 'female') {
 				sex = target.id;
+				localStorage.setItem('sex', target.id);
 			}
 
 				elements.forEach(elem => {
@@ -79,9 +91,23 @@ function calc() {
 			}
 
 			calcCalories();
-			console.log(sex, height, weight, age, activity);
+		});
+	}
+
+	function initActivityClass(parentSelector, activityClass) {
+		document.querySelector(parentSelector).querySelectorAll('div')
+		.forEach(item => {
+			item.classList.remove(activityClass);
+
+			if (item.id === localStorage.getItem('sex')) {
+				item.classList.add(activityClass);
+			}
+
+			if (item.dataset.ratio === localStorage.getItem('activity')) {
+				item.classList.add(activityClass);
+			}
 		});
 	}
 }
 
-module.exports = calc;
+export {calc};

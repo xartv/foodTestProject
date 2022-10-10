@@ -1,3 +1,5 @@
+import axios from "axios";
+
 function cards() {
 	// Cards
 
@@ -45,11 +47,11 @@ function cards() {
 		}
 	}
 
-	const getData = async (url) => {
-		const res = await fetch(url);
+	//const getData = async (url) => {
+	//	const res = await fetch(url);
 		
-		return await res.json();
-	};
+	//	return await res.json();
+	//};
 
 	// запрос через fetch
 	//getData('http://localhost:3000/menu')
@@ -68,4 +70,4 @@ function cards() {
 	});
 }
 
-module.exports = cards;
+export {cards};
