@@ -7,7 +7,7 @@ function forms(formSelector, timerID) {
 
 	const messages = {
 		loading: 'img/svg/spinner.svg',
-		success: 'Спасибо! Мы с вами скоро свяжемся',
+		success: 'Спасибо! Мы с вами скоро свяжемся (data in console)',
 		failure: 'Упс... Что-то пошло не так...',
 	};
 
@@ -19,29 +19,35 @@ function forms(formSelector, timerID) {
 		form.addEventListener('submit', (e) => {
 			e.preventDefault();
 
-			const messageField = document.createElement('img');
-			messageField.src = messages.loading;
-			messageField.style.cssText = `
-				display: block;
-				margin: 0 auto;
-			`;
-			form.insertAdjacentElement('afterend' ,messageField);
+			//! commented code worked with JSON-server
+
+			//const messageField = document.createElement('img');
+			//messageField.src = messages.loading;
+			//messageField.style.cssText = `
+			//	display: block;
+			//	margin: 0 auto;
+			//`;
+			//form.insertAdjacentElement('afterend' ,messageField);
 
 			const formData = new FormData(form);
 			const json = JSON.stringify(Object.fromEntries(formData.entries()));
+
+			createMessage(messages.success);
 			
-			postData('http://localhost:3000/requests', json)
-			.then(data => {
-				console.log(data);
-				messageField.remove();
-				createMessage(messages.success);
-			})
-			.catch(() => {
-				createMessage(messages.failure);
-			})
-			.finally(() => {
-				form.reset();
-			});
+			//postData('http://localhost:3000/requests', json)
+			//.then(data => {
+			//	console.log(data);
+			//	messageField.remove();
+			//	createMessage(messages.success);
+			//})
+			//.catch(() => {
+			//	createMessage(messages.failure);
+			//})
+			//.finally(() => {
+			//	form.reset();
+			//});
+
+			console.log(json)
 		});
 	}
 
