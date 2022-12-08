@@ -2,7 +2,6 @@ import axios from "axios";
 
 function cards() {
 	// Cards
-
 	class MenuItem {
 		constructor(img, alt, subtitle, descr, price, parentSelector, ...classes) {
 			this.img = img;
@@ -47,21 +46,6 @@ function cards() {
 		}
 	}
 
-	//const getData = async (url) => {
-	//	const res = await fetch(url);
-		
-	//	return await res.json();
-	//};
-
-	// запрос через fetch
-	//getData('http://localhost:3000/menu')
-	//.then((data) => {
-	//	data.forEach(({img, altimg, title, descr, price}) => {
-	//		new MenuItem(img, altimg, title, descr, price, '.menu__field .container').render();
-	//	});
-	//});
-
-	// запрос через axios
 	axios.get('http://localhost:3000/menu')
 	.then(data => {
 		data.data.forEach(({img, altimg, title, descr, price}) => {

@@ -16,11 +16,9 @@ function openModal(containerSelector, timerID) {
 
 function modal(triggerButtonsSelector, timerID) {
 	// Modal
-
 	const modal = document.querySelector('.modal');
 	const triggerButtons = document.querySelectorAll(triggerButtonsSelector);
 	
-
 	function showModalByScroll() {
 		let scrollHeight = Math.max(
 			document.body.scrollHeight, document.documentElement.scrollHeight,

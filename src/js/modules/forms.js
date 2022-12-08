@@ -3,7 +3,6 @@ import {postData} from '../services/services';
 
 function forms(formSelector, timerID) {
 	// Sending forms to server
-
 	const forms = document.querySelectorAll(formSelector);
 
 	const messages = {

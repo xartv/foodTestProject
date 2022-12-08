@@ -1,6 +1,5 @@
 function timer(timerClass, deadline) {
 	// Timer
-
 	function calculateDifferenceOfDate(endtime) {
 		let days, hours, minutes, seconds;
 		const t = Date.parse(endtime) - Date.parse(new Date());
@@ -8,10 +7,10 @@ function timer(timerClass, deadline) {
 		if(t <= 0) {
 			days = hours = minutes = seconds = 0;
 		} else {
-				days = Math.floor((t / (1000 * 60 * 60 * 24)));
-				hours = Math.floor((t / (1000 * 60 * 60) % 24));
-				minutes = Math.floor((t /1000/60) % 60);
-				seconds = Math.floor(((t / 1000) % 60));
+			days = Math.floor((t / (1000 * 60 * 60 * 24)));
+			hours = Math.floor((t / (1000 * 60 * 60) % 24));
+			minutes = Math.floor((t /1000/60) % 60);
+			seconds = Math.floor(((t / 1000) % 60));
 		}
 
 		return {

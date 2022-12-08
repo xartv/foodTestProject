@@ -1,6 +1,5 @@
 function slider({sliderContainer, slide, nextArr, prevArr, totalField, currentField, outerWrapper, innerWrapper}) { // send selectors to func
-	// creat slider
-
+	// create slider
 	const slider = document.querySelector(sliderContainer);
 	const slides = document.querySelectorAll(slide);
 	const current = document.querySelector(currentField);
@@ -45,7 +44,6 @@ function slider({sliderContainer, slide, nextArr, prevArr, totalField, currentFi
 		removeClassFromElementOfCollection(dots, 'active-dot');
 
 		dots[currentSlideIndex - 1].classList.add('active-dot');
-		
 	});
 
 	prevArrow.addEventListener('click', () => {
@@ -71,7 +69,6 @@ function slider({sliderContainer, slide, nextArr, prevArr, totalField, currentFi
 	});
 
 	// create dots
-
 	const dotsWrapper = document.createElement('ol');
 	dotsWrapper.classList.add('carousel-indicators');
 
@@ -113,110 +110,6 @@ function slider({sliderContainer, slide, nextArr, prevArr, totalField, currentFi
 			item.classList.remove(className);
 		});
 	}
-
-	// creating sliders v1
- 
-	//const slides = document.querySelectorAll('.offer__slide');
-	//const currentIndex = document.querySelector('#current');
-	//const totalIndex = document.querySelector('#total');
-	//const prevArrow = document.querySelector('.offer__slider-prev');
-	//const nextArrow = document.querySelector('.offer__slider-next');
-	//let currentSlideIndex;
-	
-	//showSlide();
-
-	//function showSlide() { 
-	//	totalIndex.innerHTML = slides.length < 10 ? `0${slides.length}` : slides.length;
-
-	//	slides.forEach((item, index) => {
-	//		if (!item.classList.contains('hide')) {
-	//			currentSlideIndex = index;
-	//			currentIndex.innerHTML = slides.length < 10 ? `0${index + 1}` : index;
-	//		}
-	//	});
-	//}
-	
-	//function changeSlide(prevSlide, nextSlide) {
-	//	if (prevSlide) {
-	//		slides.forEach((item, index) => {
-	//			if(item.previousElementSibling && index == currentSlideIndex) {
-	//				item.previousElementSibling.classList.add('show');
-	//				item.previousElementSibling.classList.remove('hide');
-
-	//				item.classList.remove('show');
-	//				item.classList.add('hide');
-	//			}
-	//		});
-	//	}
-
-	//	if (nextSlide) {
-	//		slides.forEach((item, index) => {
-	//			if(item.nextElementSibling && index == currentSlideIndex) {
-	//				item.nextElementSibling.classList.add('show');
-	//				item.nextElementSibling.classList.remove('hide');
-
-	//				item.classList.remove('show');
-	//				item.classList.add('hide');
-	//			}
-	//		});
-	//	}
-
-	//	showSlide();
-	//}	
-
-	//prevArrow.addEventListener('click', (e) => {
-	//	changeSlide(true, false);
-	//});
-
-	//nextArrow.addEventListener('click', (e) => {
-	//	changeSlide(false, true);
-	//});
-
-	
-	// creating slider v2
-
-	//const slides = document.querySelectorAll('.offer__slide');
-	//const current = document.querySelector('#current');
-	//const total = document.querySelector('#total');
-	//const prevArrow = document.querySelector('.offer__slider-prev');
-	//const nextArrow = document.querySelector('.offer__slider-next');
-	//let currentSlideIndex = 1;
-
-	//showSlides(currentSlideIndex);
-
-	//total.innerHTML = slides.length < 10 ? `0${slides.length}` : slides.length;
-
-	//function showSlides(n) {
-	//	if (n < 1) {
-	//		currentSlideIndex = slides.length;
-	//	}  
-
-	//	if (n > slides.length) {
-	//		currentSlideIndex = 1;
-	//	}
-		
-	//	slides.forEach(item => {
-	//		item.classList.remove('show');
-	//		item.classList.add('hide');
-	//	});
-
-	//	slides[currentSlideIndex - 1].classList.remove('hide');
-	//	slides[currentSlideIndex - 1].classList.add('show');
-
-	//	current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;
-	//}
-
-	//function changeSlide(n) {
-	//	showSlides(currentSlideIndex += n);
-	//}
-
-	//prevArrow.addEventListener('click', () => {
-	//	changeSlide(-1);
-	//});
-
-	//nextArrow.addEventListener('click', () => {
-	//	changeSlide(1);
-	//});
 }
 
 export {slider};

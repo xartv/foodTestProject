@@ -1,6 +1,5 @@
 function tabs(tabsSelector, tabsContentSelector, tabsWrapperSelector, activityClass) {
 	// Tabs
-
 	const tabs = document.querySelectorAll(tabsSelector);
 	const tabsContent = document.querySelectorAll(tabsContentSelector);
 	const tabsWrapper = document.querySelector(tabsWrapperSelector);

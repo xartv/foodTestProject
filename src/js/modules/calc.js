@@ -37,7 +37,6 @@ function calc() {
 		} else {
 			resultField.innerHTML = Math.round((88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * activity);
 		}
-
 	}
 
 	function getStaticInformation(parentSelector, activityClass) {
@@ -55,20 +54,19 @@ function calc() {
 				activity = target.dataset.ratio;
 				localStorage.setItem('activity', target.dataset.ratio);
 			}
+
 			if (target.id == 'male' || target.id == 'female') {
 				sex = target.id;
 				localStorage.setItem('sex', target.id);
 			}
 
-				elements.forEach(elem => {
-					elem.classList.remove(activityClass);
-				});
+			elements.forEach(elem => {
+				elem.classList.remove(activityClass);
+			});
 
-				target.classList.add(activityClass);
+			target.classList.add(activityClass);
 
-				calcCalories();
-
-				console.log(sex, height, weight, age, activity);
+			calcCalories();
 		});
 	}
 	
