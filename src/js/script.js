@@ -12,8 +12,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	calc();
 	cards();
-	forms('form' ,timerID);
-	modal('[data-modal]' ,timerID);
+	forms('form', timerID);
+	modal('[data-modal]', timerID);
 	slider({
 		sliderContainer: '.offer__slider',
 		slide: '.offer__slide',
