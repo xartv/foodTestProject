@@ -331,6 +331,45 @@ function forms(formSelector, timerID) {
 
 /***/ }),
 
+/***/ "./src/js/modules/hamburger.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/hamburger.js ***!
+  \*************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "hamburger": function() { return /* binding */ hamburger; }
+/* harmony export */ });
+function hamburger() {
+  var hamburger = document.querySelector('.hamburger');
+  var header = document.querySelector('.header');
+  var background = document.querySelector('.background');
+  var links = header.querySelectorAll('a');
+  var btn = header.querySelector('button');
+  function removeActive() {
+    hamburger.classList.remove('hamburger_active');
+    header.classList.remove('header_active');
+    background.classList.remove('background_active');
+  }
+  background.addEventListener('click', function () {
+    removeActive();
+  });
+  header.addEventListener('click', function (e) {
+    if (e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON') return;
+    removeActive();
+  });
+  hamburger.addEventListener('click', function () {
+    hamburger.classList.toggle('hamburger_active');
+    header.classList.toggle('header_active');
+    background.classList.toggle('background_active');
+  });
+}
+
+
+/***/ }),
+
 /***/ "./src/js/modules/modal.js":
 /*!*********************************!*\
   !*** ./src/js/modules/modal.js ***!
@@ -6433,6 +6472,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
 /* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
+/* harmony import */ var _modules_hamburger__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/hamburger */ "./src/js/modules/hamburger.js");
+
 
 
 
@@ -6462,6 +6503,7 @@ window.addEventListener('DOMContentLoaded', function () {
   });
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_5__.tabs)('.tabheader__item', '.tabcontent', '.tabheader__items', 'tabheader__item_active');
   (0,_modules_timer__WEBPACK_IMPORTED_MODULE_6__.timer)('.timer', '2023-04-10');
+  (0,_modules_hamburger__WEBPACK_IMPORTED_MODULE_7__.hamburger)();
 });
 }();
 /******/ })()

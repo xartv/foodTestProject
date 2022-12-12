@@ -6,6 +6,7 @@ import	{modal, openModal} from './modules/modal';
 import	{slider} from './modules/slider';
 import	{tabs} from './modules/tabs';
 import	{timer} from './modules/timer';
+import { hamburger } from './modules/hamburger';
 
 window.addEventListener('DOMContentLoaded', () => {
 	const timerID = setTimeout(() => openModal('.modal' ,timerID), 5000);
@@ -26,4 +27,5 @@ window.addEventListener('DOMContentLoaded', () => {
 	});
 	tabs('.tabheader__item', '.tabcontent', '.tabheader__items', 'tabheader__item_active');
 	timer('.timer', '2023-04-10');
+	hamburger();
 });
