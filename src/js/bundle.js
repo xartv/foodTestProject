@@ -272,7 +272,7 @@ function forms(formSelector, timerID) {
   var forms = document.querySelectorAll(formSelector);
   var messages = {
     loading: 'img/svg/spinner.svg',
-    success: 'Спасибо! Мы с вами скоро свяжемся (data in console)',
+    success: 'Спасибо! Мы с вами скоро свяжемся',
     failure: 'Упс... Что-то пошло не так...'
   };
   forms.forEach(function (form) {

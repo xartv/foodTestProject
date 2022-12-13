@@ -166,7 +166,7 @@
                 </div>
 
                 <div class="calculating__subtitle">
-                    Выберите вашу физическая активность
+                    Выберите вашу физическую активность
                 </div>
                 <div class="calculating__choose calculating__choose_big">
                     <div id="low" data-ratio="1.2" class="calculating__choose-item">Низкая активность </div>
@@ -205,8 +205,8 @@
         <div class="container">
             <div class="title">Заказывай пробный день прямо сейчас!</div>
             <form action="#" class="order__form">
-                <input required placeholder="Ваше имя" name="name" type="text" class="order__input">
-                <input required placeholder="Ваш номер телефона" name="phone" type="phone" class="order__input">
+                <input type="text" name="name" required placeholder="Ваше имя" class="order__input">
+                <input type="tel" name="tel" pattern="[\+]\d{11}" required placeholder="tel: +71234567891" class="order__input">
                 <img src="icons/right.svg" alt="right">
                 <button class="btn btn_dark btn_min">Перезвонить мне</button>
             </form>
@@ -275,7 +275,7 @@
                     <div data-close class="modal__close">&times;</div>
                     <div class="modal__title">Мы свяжемся с вами как можно быстрее!</div>
                     <input required placeholder="Ваше имя" name="name" type="text" class="modal__input">
-                    <input required placeholder="Ваш номер телефона" name="phone" type="phone" class="modal__input">
+                    <input required placeholder="tel: +71234567891" name="phone" type="tel" pattern="[\+]\d{11}" class="modal__input">
                     <button class="btn btn_dark btn_min">Перезвонить мне</button>
                 </form>
             </div>
