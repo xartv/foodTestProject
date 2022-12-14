@@ -485,7 +485,7 @@
 		}
 	}
 	.preview {
-		padding: 40px 0 100px 0;
+		padding: 40px 0 60px 0;
 		margin-bottom: 50px;
 		h3 {
 			display: none;
@@ -624,7 +624,7 @@
 		padding: 30px 0 40px 0;
 		.bgc_y {
 			top: 20px;
-			height: 645px;
+			max-height: 400px;
 		}
 		.container {
 			.promotion__text {
