@@ -8,4 +8,4 @@ The project implements all the main elements that are relevant for a modern webs
 * ✅ __Modal window and form__
 * ✅ __Full adaptation for different types of devices__
 
-![slider](src/img/readme/preview.gif)
+![slider](src/img/readme/preview1.gif)
