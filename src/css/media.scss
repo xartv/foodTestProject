@@ -305,26 +305,28 @@
 		padding: 20px 20px;
 	}
 	.preview {
-		.tabcontainer {
-			.tabheader {
-				padding: 20px 20px;
-				h3 {
-					font-size: 14px;
-				}
-				.tabheader__item {
-					font-size: 16px;
-					&_active {
-						font-size: 18px;
+		.container {
+			.tabcontainer {
+				.tabheader {
+					padding: 20px 20px;
+					h3 {
+						font-size: 14px;
+					}
+					.tabheader__item {
+						font-size: 16px;
+						&_active {
+							font-size: 18px;
+						}
 					}
 				}
+				.tabcontent__descr {
+					top: 222px;
+					font-size: 14px;
+					width: 500px;
+					right: -143px;
+					height: auto;
+				} 
 			}
-			.tabcontent__descr {
-				top: 222px;
-				font-size: 14px;
-				width: 500px;
-				right: -143px;
-				height: auto;
-			} 
 		}
 		.preview__life {
 			display: none;
@@ -485,7 +487,7 @@
 		}
 	}
 	.preview {
-		padding: 40px 0 60px 0;
+		padding: 40px 0 100px 0;
 		margin-bottom: 50px;
 		h3 {
 			display: none;
@@ -669,5 +671,11 @@
 				width: 30px;
 			}
 		}
+	}
+}
+
+@media (min-width: 425px) and (max-width: 575px) {
+	.preview {
+		padding: 40px 0 60px 0;
 	}
 }
