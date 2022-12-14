@@ -1,5 +1,5 @@
-## 🥦 Healthy food delivery responsive landing page
-👉🏻 [Website](https://xartv.github.io/foodTestProject/src/)
+# 🥦 Healthy food delivery responsive landing page
+👉🏻 [Demo](https://xartv.github.io/foodTestProject/src/)
 
 The project implements all the main elements that are relevant for a modern website
 * ✅ __Tabs__
