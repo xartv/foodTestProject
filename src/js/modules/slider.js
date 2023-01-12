@@ -1,115 +1,126 @@
-function slider({sliderContainer, slide, nextArr, prevArr, totalField, currentField, outerWrapper, innerWrapper}) { // send selectors to func
-	// create slider
-	const slider = document.querySelector(sliderContainer);
-	const slides = document.querySelectorAll(slide);
-	const current = document.querySelector(currentField);
-	const total = document.querySelector(totalField);
-	const prevArrow = document.querySelector(prevArr);
-	const nextArrow = document.querySelector(nextArr);
-	const outer = document.querySelector(outerWrapper);
-	const inner = document.querySelector(innerWrapper);
-	const width = window.getComputedStyle(outer).width;
-	let offset = 0;
-	let currentSlideIndex = 1;
+function slider({
+  sliderContainer,
+  slide,
+  nextArr,
+  prevArr,
+  totalField,
+  currentField,
+  outerWrapper,
+  innerWrapper,
+}) {
+  // send selectors to func
+  // create slider
+  const slider = document.querySelector(sliderContainer);
+  const slides = document.querySelectorAll(slide);
+  const current = document.querySelector(currentField);
+  const total = document.querySelector(totalField);
+  const prevArrow = document.querySelector(prevArr);
+  const nextArrow = document.querySelector(nextArr);
+  const outer = document.querySelector(outerWrapper);
+  const inner = document.querySelector(innerWrapper);
+  const width = window.getComputedStyle(outer).width;
+  let offset = 0;
+  let currentSlideIndex = 1;
 
-	total.innerHTML = slides.length < 10 ? `0${slides.length}` : slides.length;
-	setCurrentSlideValue();
+  total.innerHTML = slides.length < 10 ? `0${slides.length}` : slides.length;
+  setCurrentSlideValue();
 
-	inner.style.display = 'flex';
-	inner.style.transition = '0.5s All';
-	outer.style.overflow = 'hidden';
-	inner.style.width = 100 * slides.length + '%';
+  inner.style.display = "flex";
+  inner.style.transition = "0.5s All";
+  outer.style.overflow = "hidden";
+  inner.style.width = 100 * slides.length + "%";
 
-	slides.forEach(slide => {
-		slide.style.width = width;
-	});
+  slides.forEach(slide => {
+    slide.style.width = width;
+  });
 
-	nextArrow.addEventListener('click', () => {
-		if (offset == parseInt(width) * (slides.length - 1)) {
-			offset = 0;
-		} else {
-			offset += parseInt(width); 
-		}
+  nextArrow.addEventListener("click", () => {
+    if (offset == parseInt(width) * (slides.length - 1)) {
+      offset = 0;
+    } else {
+      offset += parseInt(width);
+    }
 
-		inner.style.transform = `translateX(-${offset}px)`;
+    inner.style.transform = `translateX(-${offset}px)`;
 
-		if (currentSlideIndex == slides.length) {
-			currentSlideIndex = 1;
-		} else {
-			currentSlideIndex++;
-		}
-	
-		setCurrentSlideValue();
+    if (currentSlideIndex == slides.length) {
+      currentSlideIndex = 1;
+    } else {
+      currentSlideIndex++;
+    }
 
-		removeClassFromElementOfCollection(dots, 'active-dot');
+    setCurrentSlideValue();
 
-		dots[currentSlideIndex - 1].classList.add('active-dot');
-	});
+    removeClassFromElementOfCollection(dots, "active-dot");
 
-	prevArrow.addEventListener('click', () => {
-		if (offset == 0) {
-			offset = parseInt(width) * (slides.length - 1);
-		} else {
-			offset -= parseInt(width); 
-		}
+    dots[currentSlideIndex - 1].classList.add("active-dot");
+  });
 
-		inner.style.transform = `translateX(-${offset}px)`;
+  prevArrow.addEventListener("click", () => {
+    if (offset == 0) {
+      offset = parseInt(width) * (slides.length - 1);
+    } else {
+      offset -= parseInt(width);
+    }
 
-		if (currentSlideIndex == 1) {
-			currentSlideIndex = slides.length;
-		} else {
-			currentSlideIndex--;
-		}
+    inner.style.transform = `translateX(-${offset}px)`;
 
-		setCurrentSlideValue();
+    if (currentSlideIndex == 1) {
+      currentSlideIndex = slides.length;
+    } else {
+      currentSlideIndex--;
+    }
 
-		removeClassFromElementOfCollection(dots, 'active-dot');
+    setCurrentSlideValue();
 
-		dots[currentSlideIndex - 1].classList.add('active-dot');
-	});
+    removeClassFromElementOfCollection(dots, "active-dot");
 
-	// create dots
-	const dotsWrapper = document.createElement('ol');
-	dotsWrapper.classList.add('carousel-indicators');
+    dots[currentSlideIndex - 1].classList.add("active-dot");
+  });
 
-	slider.style.position = 'relative';
-	slider.append(dotsWrapper);
+  // create dots
+  const dotsWrapper = document.createElement("ol");
+  dotsWrapper.classList.add("carousel-indicators");
 
-	for (let i = 0; i < slides.length; i++) {
-		dotsWrapper.innerHTML += `<li class="dot" data-slider="${i + 1}"></li>`;
-	}
+  slider.style.position = "relative";
+  slider.append(dotsWrapper);
 
-	const dots = document.querySelectorAll('.dot');
+  for (let i = 0; i < slides.length; i++) {
+    dotsWrapper.innerHTML += `<li class="dot" data-slider="${i + 1}"></li>`;
+  }
 
-	dots[currentSlideIndex - 1].classList.add('active-dot');
+  const dots = document.querySelectorAll(".dot");
 
-	dots.forEach(dot => {
-		dot.addEventListener('click', (e) => {
-			const target = e.target;
+  dots[currentSlideIndex - 1].classList.add("active-dot");
 
-			removeClassFromElementOfCollection(dots, 'active-dot');
-			
-			e.target.classList.add('active-dot');
+  dots.forEach(dot => {
+    dot.addEventListener("click", e => {
+      const target = e.target;
 
-			offset = (target.dataset.slider - 1) * parseInt(width);
+      removeClassFromElementOfCollection(dots, "active-dot");
 
-			inner.style.transform = `translateX(-${offset}px)`;
+      e.target.classList.add("active-dot");
 
-			currentSlideIndex = +target.dataset.slider;
-			
-			setCurrentSlideValue();
-		});
-	});
+      offset = (target.dataset.slider - 1) * parseInt(width);
 
-	function setCurrentSlideValue() {
-		current.innerHTML = slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;	
-	} 
+      inner.style.transform = `translateX(-${offset}px)`;
 
-	function removeClassFromElementOfCollection(collection, className) {
-		collection.forEach(item => {
-			item.classList.remove(className);
-		});
-	}
+      currentSlideIndex = +target.dataset.slider;
+
+      setCurrentSlideValue();
+    });
+  });
+
+  function setCurrentSlideValue() {
+    current.innerHTML =
+      slides.length < 10 ? `0${currentSlideIndex}` : currentSlideIndex;
+  }
+
+  function removeClassFromElementOfCollection(collection, className) {
+    collection.forEach(item => {
+      item.classList.remove(className);
+    });
+  }
 }
 
-export {slider};
+export { slider };
